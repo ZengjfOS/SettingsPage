@@ -1,0 +1,19 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Welcome to ARM-Settings\n\n\nThis Page just for ARM machine parameter settings.\n\n\nNetwork\n\n\n\n\n\u52a8\u6001IP\n\n\n\u9759\u6001IP",
+            "title": "Home"
+        },
+        {
+            "location": "/#welcome-to-arm-settings",
+            "text": "This Page just for ARM machine parameter settings.",
+            "title": "Welcome to ARM-Settings"
+        },
+        {
+            "location": "/#network",
+            "text": "\u52a8\u6001IP  \u9759\u6001IP",
+            "title": "Network"
+        }
+    ]
+}
