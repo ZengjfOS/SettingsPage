@@ -1,3 +1,4 @@
+<?php header("Access-Control-Allow-Origin: *") ?>
 <?php
     $data = json_decode(file_get_contents('php://input'), true);
     $categories = $data["categories"];
@@ -19,10 +20,25 @@
         fwrite($networkFile, $fileString);
         fclose($networkFile);
         
-        echo "{'status': 'ok'}";
+        echo '{"status": "ok"}';
         
     	shell_exec('sync');
     	shell_exec('reboot');
+    }
+
+    if ($categories == "dateAndTime" && $type == "dateAndTime") {
+        $date = $data["date"];
+        $time = $data["time"];
+
+        $result = exec("date -s '".$date." ".$time."'");
+
+        if (strpos($result, $time)){
+            exec("hwclock -w");
+            echo '{"status": "ok"}';
+        } else {
+            echo '{"status": "error"}';
+        }
+
     }
 
     shell_exec('sync');
