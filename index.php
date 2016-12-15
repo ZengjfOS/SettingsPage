@@ -160,81 +160,96 @@
                             <script src="js/timedropper.min.js"></script>
 
                             <!-- Network -->
-                            <div onClick="javascript:dhcpRadioClick()" style="width:80px;">
-                                <input name="IPSettings" id="IPSettingsDHCP" type="radio" value="DHCP" 
-                                <?php
-                                    $command="grep 'iface eth0 inet dhcp' /etc/network/interfaces";
-                                    $dhcpGetIP = exec ($command);
-                                    if ($dhcpGetIP != null) {
-                                        echo "checked";
-                                    }
-                                ?>
-                                ><span id=aa onClick="IPSettingsDHCP.checked=true">DHCP</span>
-                            </div>
-                            <div onClick="javascript:staticIPRadioClick()" style="width:80px;">
-                                <input name="IPSettings" id="IPSettingsStaticIP"type="radio" value="StaticIP"
-                                <?php
-                                    $command="grep 'iface eth0 inet dhcp' /etc/network/interfaces";
-                                    $dhcpGetIP = exec ($command);
-                                    if ($dhcpGetIP == null) {
-                                        echo "checked";
-                                    }
-                                ?>
-                                ><span id=aa onClick="IPSettingsStaticIP.checked=true">Static IP</span>
-                            </div>
-                            <div id="staticSettingsAglinDiv" style="margin-left:40px;width:280px;height:140px;">
-                                <div>
-                                    <span style="float: left;">IP:</span>
-                                    <input style="float: right;text-align:center;" name="ip" type="text" value=
-                                        <?php
-                                            $command="ifconfig 'eth0' | grep 'inet ' | awk -F ' ' '{print $2}'";
-                                            $localIP = exec ($command);
-                                            echo "\"".$localIP."\"";
-                                            ?>
-                                        >
-                                    <br>
-                                    <div align="center" style="clear: both;"></div>
+                            <li> Configure </li>
+                            <div style="margin-left:40px;">
+                                <div onClick="javascript:dhcpRadioClick()" style="width:80px;">
+                                    <input name="IPSettings" id="IPSettingsDHCP" type="radio" value="DHCP" 
+                                    <?php
+                                        $command="grep 'iface eth0 inet dhcp' /etc/network/interfaces";
+                                        $dhcpGetIP = exec ($command);
+                                        if ($dhcpGetIP != null) {
+                                            echo "checked";
+                                        }
+                                    ?>
+                                    ><span id=aa onClick="IPSettingsDHCP.checked=true">DHCP</span>
                                 </div>
-                                <div>
-                                    <span style="float: left;">Netmask:</span>
-                                    <input style="float: right;text-align:center;" name="netmask" type="text" value=
-                                        <?php
-                                            $command="ifconfig 'eth0' | grep 'inet ' | awk -F ' ' '{print $4}'";
-                                            $localIP = exec ($command);
-                                            echo "\"".$localIP."\"";
-                                            ?>
-                                        >
-                                    <br>
-                                    <div align="center" style="clear: both;"></div>
+                                <div onClick="javascript:staticIPRadioClick()" style="width:80px;">
+                                    <input name="IPSettings" id="IPSettingsStaticIP"type="radio" value="StaticIP"
+                                    <?php
+                                        $command="grep 'iface eth0 inet dhcp' /etc/network/interfaces";
+                                        $dhcpGetIP = exec ($command);
+                                        if ($dhcpGetIP == null) {
+                                            echo "checked";
+                                        }
+                                    ?>
+                                    ><span id=aa onClick="IPSettingsStaticIP.checked=true">Static IP</span>
                                 </div>
-                                <div>
-                                    <span style="float: left;">Broadcast:</span>
-                                    <input style="float: right;text-align:center;" name="broadcast" type="text" value=
-                                        <?php
-                                            $command="ifconfig 'eth0' | grep 'inet ' | awk -F ' ' '{print $6}'";
-                                            $localIP = exec ($command);
-                                            echo "\"".$localIP."\"";
-                                            ?>
-                                        >
-                                    <br>
-                                    <div align="center" style="clear: both;"></div>
+                                <div id="staticSettingsAglinDiv" style="margin-left:40px;width:280px;height:140px;">
+                                    <div>
+                                        <span style="float: left;">IP:</span>
+                                        <input style="float: right;text-align:center;" name="ip" type="text" value=
+                                            <?php
+                                                $command="ifconfig 'eth0' | grep 'inet ' | awk -F ' ' '{print $2}'";
+                                                $localIP = exec ($command);
+                                                echo "\"".$localIP."\"";
+                                                ?>
+                                            >
+                                        <br>
+                                        <div align="center" style="clear: both;"></div>
+                                    </div>
+                                    <div>
+                                        <span style="float: left;">Netmask:</span>
+                                        <input style="float: right;text-align:center;" name="netmask" type="text" value=
+                                            <?php
+                                                $command="ifconfig 'eth0' | grep 'inet ' | awk -F ' ' '{print $4}'";
+                                                $localIP = exec ($command);
+                                                echo "\"".$localIP."\"";
+                                                ?>
+                                            >
+                                        <br>
+                                        <div align="center" style="clear: both;"></div>
+                                    </div>
+                                    <div>
+                                        <span style="float: left;">Broadcast:</span>
+                                        <input style="float: right;text-align:center;" name="broadcast" type="text" value=
+                                            <?php
+                                                $command="ifconfig 'eth0' | grep 'inet ' | awk -F ' ' '{print $6}'";
+                                                $localIP = exec ($command);
+                                                echo "\"".$localIP."\"";
+                                                ?>
+                                            >
+                                        <br>
+                                        <div align="center" style="clear: both;"></div>
+                                    </div>
+                                    <div>
+                                        <span style="float: left;">Gateway:</span>
+                                        <input style="float: right;text-align:center;" name="gateway" type="text" value=
+                                            <?php
+                                                $command="route -n | grep UG | head -n  1 | awk -F ' ' '{print $2}'";
+                                                $localIP = exec ($command);
+                                                echo "\"".$localIP."\"";
+                                                ?>
+                                            >
+                                        <br>
+                                        <div align="center" style="clear: both;"></div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span style="float: left;">Gateway:</span>
-                                    <input style="float: right;text-align:center;" name="gateway" type="text" value=
-                                        <?php
-                                            $command="route -n | grep UG | head -n  1 | awk -F ' ' '{print $2}'";
-                                            $localIP = exec ($command);
-                                            echo "\"".$localIP."\"";
-                                            ?>
-                                        >
-                                    <br>
-                                    <div align="center" style="clear: both;"></div>
-                                </div>
-                            </div>
                             <div align="center" style="margin-top:20px;margin-bottom:20px">
                                 <input name="networkSubmit" type="button" onClick="javascript:setNetworkConfigure()" value="Submit">
-                            <div>
+                            </div>
+                            </div>
+                            <li>Check the WAN network</li> 
+                            <div align="left" style="margin-left:40px;"> 
+                                <div style="width:280px;">
+                                    <span style="float: left;">IP or DNS:</span>
+                                    <input style="float: right;text-align:center;" name="pingNetWork" type="text">
+                                    <br>
+                                </div>
+                                <div align="center" style="clear: both;"></div>
+                            </div>
+                            <div align="center" style="margin-top:20px;margin-bottom:20px">
+                                <input type="button" onClick="javascript:pingNetWork()" value="Ping">
+                            </div>
                         </ul>
                         <hr/>
                         <h2 id="dateAndTime">Date & Time</h2>

@@ -148,6 +148,42 @@ function staticIPRadioClick()
     $("#staticSettingsAglinDiv").show();
 }
 
+function pingNetWork()
+{
+    netmask = $('input[name="pingNetWork"]').val();
+
+    ajaxPostData = {"categories":"network", "type": "ping", "IPOrDNS": netmask};
+
+    $.ajax({
+        url: "settings.php",
+        type: 'POST',
+        contentType:'application/json; charset=utf-8',
+        data: JSON.stringify(ajaxPostData),
+        dataType:'json',
+        success: function(data){
+            //On ajax success do this
+            console.info("success.");
+            if (data["status"] == "ok"){
+                alert("Ping to WAN is OK.");
+            } else {
+                alert("Ping to WAN is ERROR.");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            //On error do this
+            console.info("error.");
+            if (xhr.status == 200) {
+    
+                alert(ajaxOptions);
+            }
+            else {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        }
+    });
+}
+
 $(function(){  
     var value = $('input[type="radio"][name="IPSettings"]:checked').val();
 
@@ -162,3 +198,4 @@ $(function(){
         $("#staticSettingsAglinDiv").show();
     }
 }); 
+
