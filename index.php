@@ -49,6 +49,7 @@
                             <li><a class="toctree-l4" href="#network">Network</a></li>
                             <li><a class="toctree-l4" href="#dateAndTime">Date & Time</a></li>
                             <li><a class="toctree-l4" href="#show-data">Show Data</a></li>
+                            <li><a class="toctree-l4" href="#customerdata">Customer Data</a></li>
                         </ul>
                     </li>
                     <li>
@@ -287,6 +288,8 @@
                         <hr/>
                         <h2 id="show-data">Show Data</h2>
                         <p><a href="sensor.php">Show sensor data with GUI.</a></p>
+                        <h2 id="show-data">Configure customer data</h2>
+                        <p><a href="customerData.php">Configure customer data</a></p>
                         </div>
                         </div>
                         <footer>
