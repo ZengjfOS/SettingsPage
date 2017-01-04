@@ -41,22 +41,22 @@ function setNetworkConfigure()
         console.info(ajaxPostData);
 
         if (checkIP(ip) == false) {
-            alert("Please Check Your IP format.")
+            alert("Please Check Your IP Format.")
             return;
         }
 
         if (checkIP(netmask) == false) {
-            alert("Please Check Your network format.")
+            alert("Please Check Your Network Format.")
             return;
         }
 
         if (checkIP(broadcast) == false) {
-            alert("Please Check Your broadcast format.")
+            alert("Please Check Your Broadcast Format.")
             return;
         }
 
         if (checkIP(gateway) == false) {
-            alert("Please Check Your gateway format.")
+            alert("Please Check Your Gateway Format.")
             return;
         }
     }
@@ -172,6 +172,139 @@ function pingNetWork()
         error: function(xhr, ajaxOptions, thrownError) {
             //On error do this
             console.info("error.");
+            if (xhr.status == 200) {
+    
+                alert(ajaxOptions);
+            }
+            else {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        }
+    });
+}
+
+function updateUboot()
+{
+    ftpIPAddress = $('input[name="ftpIPAddress"]').val();
+    ubootName = $('input[name="ftpUbootName"]').val();
+    $('input[name="updateUboot"]').prop('disabled', true);
+
+    if(!checkIP(ftpIPAddress)){
+        alert("Please Check Your FTP IP Address Format.")
+        return 
+    }
+
+    ajaxPostData = {"categories":"updateSystem", "type": "uboot", "ftpIP": ftpIPAddress, "ubootName": ubootName};
+
+    $.ajax({
+        url: "settings.php",
+        type: 'POST',
+        contentType:'application/json; charset=utf-8',
+        data: JSON.stringify(ajaxPostData),
+        dataType:'json',
+        success: function(data){
+            //On ajax success do this
+            $('input[name="updateUboot"]').prop('disabled', false);
+            console.info("success.");
+            if (data["status"] == "ok"){
+                alert("Update the U-Boot is OK.");
+            } else {
+                alert("Update the U-Boot is ERROR.");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            //On error do this
+            $('input[name="updateUboot"]').prop('disabled', false);
+            console.info("error.");
+            if (xhr.status == 200) {
+    
+                alert(ajaxOptions);
+            }
+            else {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        }
+    });
+}
+
+function updateKernel(){
+    ftpIPAddress = $('input[name="ftpIPAddress"]').val();
+    kernelName = $('input[name="ftpKernelName"]').val();
+    $('input[name="updateKernel"]').prop('disabled', true);
+
+    if(!checkIP(ftpIPAddress)){
+        alert("Please Check Your FTP IP Address Format.")
+        return 
+    }
+
+    ajaxPostData = {"categories":"updateSystem", "type": "kernel", "ftpIP": ftpIPAddress, "kernelName": kernelName};
+
+    $.ajax({
+        url: "settings.php",
+        type: 'POST',
+        contentType:'application/json; charset=utf-8',
+        data: JSON.stringify(ajaxPostData),
+        dataType:'json',
+        success: function(data){
+            //On ajax success do this
+            $('input[name="updateKernel"]').prop('disabled', false);
+            console.info("success.");
+            if (data["status"] == "ok"){
+                alert("Update Kernel is OK.");
+            } else {
+                alert("Update Kernel is ERROR.");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            //On error do this
+            $('input[name="updateKernel"]').prop('disabled', false);
+            console.info("error.");
+            if (xhr.status == 200) {
+    
+                alert(ajaxOptions);
+            }
+            else {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        }
+    });
+}
+
+function updateRootfs(){
+    ftpIPAddress = $('input[name="ftpIPAddress"]').val();
+    rootfsName = $('input[name="ftpRootfsName"]').val();
+    $('input[name="updateRootfs"]').prop('disabled', true);
+
+    if(!checkIP(ftpIPAddress)){
+        alert("Please Check Your FTP IP Address Format.")
+        return 
+    }
+
+    ajaxPostData = {"categories":"updateSystem", "type": "rootfs", "ftpIP": ftpIPAddress, "rootfsName": rootfsName};
+
+    $.ajax({
+        url: "settings.php",
+        type: 'POST',
+        contentType:'application/json; charset=utf-8',
+        data: JSON.stringify(ajaxPostData),
+        dataType:'json',
+        success: function(data){
+            //On ajax success do this
+            $('input[name="updateRootfs"]').prop('disabled', false);
+            console.info("success.");
+            if (data["status"] == "ok"){
+                alert("Upload Rootfs is OK. The system wile update and reboot in time.");
+            } else {
+                alert("Upload Rootfs is ERROR.");
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            //On error do this
+            console.info("error.");
+            $('input[name="updateRootfs"]').prop('disabled', false);
             if (xhr.status == 200) {
     
                 alert(ajaxOptions);

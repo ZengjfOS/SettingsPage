@@ -48,8 +48,10 @@
                             <li><a class="toctree-l4" href="#base-infomation">Base Infomation</a></li>
                             <li><a class="toctree-l4" href="#network">Network</a></li>
                             <li><a class="toctree-l4" href="#dateAndTime">Date & Time</a></li>
+                            <li><a class="toctree-l4" href="#update-system">Update System</a></li>
                             <li><a class="toctree-l4" href="#show-data">Show Data</a></li>
-                            <li><a class="toctree-l4" href="#customerdata">Customer Data</a></li>
+                            <li><a class="toctree-l4" href="#customer-data">Customer Data</a></li>
+                            <li><a class="toctree-l4" href="#web-console">Web Console</a></li>
                         </ul>
                     </li>
                     <li>
@@ -285,11 +287,73 @@
                                 <input name="dataAndTimeSubmit" type="button" onClick="javascript:setDataAndTime()" value="Submit">
                             </div>
                         </div>
+
+                        <hr/>
+                        <h2 id="update-system">Update System</h2>
+                        <div>
+                            <table >
+                                <tr>
+                                    <td>
+                                        <span >FTP IP Address:</span>
+                                    </td>
+                                    <td>
+                                        <input style="text-align:center;" name="ftpIPAddress" type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span >U-Boot File Name:</span>
+                                    </td>
+                                    <td>
+                                        <input style="text-align: center;" name="ftpUbootName" type="text" value="u-boot.bin" />
+                                    </td>
+                                    <td>
+                                        <input name="updateUboot" type="button" onClick="javascript:updateUboot()" value="Update U-Boot">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span >Linux Kernel File Name:</span>
+                                    </td>
+                                    <td>
+                                        <input style="text-align: center;" name="ftpKernelName" type="text" value="uImage"/>
+                                    </td>
+                                    <td>
+                                        <input name="updateKernel" type="button" onClick="javascript:updateKernel()" value="Update Kernel">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span >Rootfs File Name:</span>
+                                    </td>
+                                    <td>
+                                        <input style="text-align: center;" name="ftpRootfsName" type="text" value="rootfs.tar.bz2"/>
+                                    </td>
+                                    <td>
+                                        <input name="updateRootfs" type="button" onClick="javascript:updateRootfs()" value="Update Rootfs">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
                         <hr/>
                         <h2 id="show-data">Show Data</h2>
-                        <p><a href="sensor.php">Show sensor data with GUI.</a></p>
-                        <h2 id="show-data">Configure customer data</h2>
-                        <p><a href="customerData.php">Configure customer data</a></p>
+                        <div>
+                            <p><a href="sensor.php">Show sensor data with GUI.</a></p>
+                        </div>
+
+                        <hr/>
+                        <h2 id="customer-data">Configure customer data</h2>
+                        <div>
+                            <p><a href="customerData.php">Configure customer data</a></p>
+                        </div>
+
+                        <hr/>
+                        <h2 id="web-console">Web Console</h2>
+                        <div>
+                            <p><a href="webconsole.php">use the console like in the telnet</a></p>
+                        </div>
+
                         </div>
                         </div>
                         <footer>
