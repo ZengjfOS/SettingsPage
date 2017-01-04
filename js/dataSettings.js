@@ -190,6 +190,8 @@ function updateUboot()
     ubootName = $('input[name="ftpUbootName"]').val();
     $('input[name="updateUboot"]').prop('disabled', true);
 
+    enableCoverMask();
+
     if(!checkIP(ftpIPAddress)){
         alert("Please Check Your FTP IP Address Format.")
         return 
@@ -206,6 +208,7 @@ function updateUboot()
         success: function(data){
             //On ajax success do this
             $('input[name="updateUboot"]').prop('disabled', false);
+            disableCoverMask();
             console.info("success.");
             if (data["status"] == "ok"){
                 alert("Update the U-Boot is OK.");
@@ -216,6 +219,7 @@ function updateUboot()
         error: function(xhr, ajaxOptions, thrownError) {
             //On error do this
             $('input[name="updateUboot"]').prop('disabled', false);
+            disableCoverMask();
             console.info("error.");
             if (xhr.status == 200) {
     
@@ -229,10 +233,22 @@ function updateUboot()
     });
 }
 
+function enableCoverMask(){
+    $('.bg').css({'display':'block'});
+    $('.content').css({'display':'block'});
+}
+
+function disableCoverMask(){
+    $('.bg').css({'display':'none'});
+    $('.content').css({'display':'none'});
+}
+
 function updateKernel(){
     ftpIPAddress = $('input[name="ftpIPAddress"]').val();
     kernelName = $('input[name="ftpKernelName"]').val();
     $('input[name="updateKernel"]').prop('disabled', true);
+
+    enableCoverMask();
 
     if(!checkIP(ftpIPAddress)){
         alert("Please Check Your FTP IP Address Format.")
@@ -250,6 +266,7 @@ function updateKernel(){
         success: function(data){
             //On ajax success do this
             $('input[name="updateKernel"]').prop('disabled', false);
+            disableCoverMask();
             console.info("success.");
             if (data["status"] == "ok"){
                 alert("Update Kernel is OK.");
@@ -260,6 +277,7 @@ function updateKernel(){
         error: function(xhr, ajaxOptions, thrownError) {
             //On error do this
             $('input[name="updateKernel"]').prop('disabled', false);
+            disableCoverMask();
             console.info("error.");
             if (xhr.status == 200) {
     
@@ -278,6 +296,8 @@ function updateRootfs(){
     rootfsName = $('input[name="ftpRootfsName"]').val();
     $('input[name="updateRootfs"]').prop('disabled', true);
 
+    enableCoverMask();
+
     if(!checkIP(ftpIPAddress)){
         alert("Please Check Your FTP IP Address Format.")
         return 
@@ -294,9 +314,10 @@ function updateRootfs(){
         success: function(data){
             //On ajax success do this
             $('input[name="updateRootfs"]').prop('disabled', false);
+            disableCoverMask();
             console.info("success.");
             if (data["status"] == "ok"){
-                alert("Upload Rootfs is OK. The system wile update and reboot in time.");
+                alert("Updata Rootfs is OK. The system will update and reboot in time.");
             } else {
                 alert("Upload Rootfs is ERROR.");
             }
@@ -305,6 +326,7 @@ function updateRootfs(){
             //On error do this
             console.info("error.");
             $('input[name="updateRootfs"]').prop('disabled', false);
+            disableCoverMask();
             if (xhr.status == 200) {
     
                 alert(ajaxOptions);
