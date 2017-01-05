@@ -17,6 +17,23 @@
 
     }
 
+    if ($categories == "customer" && $type == "updateApp") {
+        $ftpIP = $data["ftpIPAddress"];
+        $appName = $data["appName"];
+
+
+        $ret = 0;
+        system("rm /usr/share/huishu -rf");
+        echo 
+        system("ftpget ".$ftpIP." /root/".$appName." ".$appName." && tar xf /root/".$appName." -C /usr/share && reboot;", $ret);
+        if ($ret == 0){
+            echo '{"status": "ok"}';
+        } else {
+            echo '{"status": "error"}';
+        }
+
+    }
+
     shell_exec('sync');
 ?>
 

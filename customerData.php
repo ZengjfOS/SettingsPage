@@ -28,6 +28,18 @@
         <script type="text/javascript" src="./js/highlight.pack.js"></script> 
     </head>
     <body class="wy-body-for-nav" role="document">
+
+        <style>
+            .bg{display:none;position:fixed;width:100%;height:100%;background:#000;z-index:2;top:0;left:0;opacity:0.7;}
+            .content{display:none;width:400px;height:100px;position:fixed;top:50%;margin-top:-150px;color:#F00;background:#000;z-index:3;left:50%;margin-left:-250px;padding:20px}
+        </style>
+        <div class="bg"></div>
+        <div class="content">
+            <li>Updating Is Runing.</li>
+            <li>Don't Power Outages And Please Waiting is Over.</li>
+            <li>Otherwise, The device is likely to be damaged.</li>
+        </div>
+
         <div class="wy-grid-for-nav">
         <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
             <div class="wy-side-nav-search">
@@ -45,6 +57,7 @@
                         <a class="current" href=".">Customer Data</a>
                         <ul>
                             <li class="toctree-l3"><a href="#welcome-to-arm-settings">Welcome to Customer Data</a></li>
+                            <li class="toctree-l3"><a href="#update_application">Update Application</a></li>
                         </ul>
                     </li>
                     <li>
@@ -90,6 +103,33 @@
                         <div align="center" style="margin-top:20px;margin-bottom:20px">
                             <input type="button" onClick="javascript:customerDate()" value="Submit">
                         </div>
+
+                        <h1 id="update_application">Update Application</h1>
+                        <hr/>
+                        <div>
+                            <table >
+                                <tr>
+                                    <td>
+                                        <span >FTP IP Address:</span>
+                                    </td>
+                                    <td>
+                                        <input style="text-align:center;" name="ftpIPAddress" type="text" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span >Application File Name:</span>
+                                    </td>
+                                    <td>
+                                        <input style="text-align: center;" name="ftpApplicationName" type="text" value="app.tar" />
+                                    </td>
+                                    <td>
+                                        <input name="updateApp" type="button" onClick="javascript:updateApp()" value="Update Application">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
                         <footer>
                             <hr/>
                             <div role="contentinfo">
