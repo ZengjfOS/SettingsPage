@@ -349,6 +349,78 @@
                         </div>
 
                         <hr/>
+                        <h2 id="uart-communicate">UART Communicate</h2>
+                        <div>
+  <div>
+    <table border="1">
+      <tr align="center" valign="middle">
+        <td>端口号：</td>
+        <td>
+          <select name="COMPorts" id="COMPorts">
+            <option value="ttymxc0">ttymxc0</option>
+    		<option value="ttymxc1">ttymxc1</option>
+    		<option value="ttymxc2" selected="selected">ttymxc2</option>
+    	    <option value="ttymxc3">ttymxc3</option>
+            <option value="ttymxc4">ttymxc4</option>
+          </select></td>
+        <td>波特率：</td>
+        <td>
+          <select name="BaudRate" id="BaudRate">
+            <option value="9600">9600</option>
+    		  <option value="19200">19200</option>
+    		  <option value="38400">38400</option>
+    	      <option value="57600">57600</option>
+            <option value="115200" selected="selected">115200</option>
+          </select>
+        </td>
+        <td>停止位：</td>
+        <td>
+          <select name="StopBit" id="StopBit">
+            <option value="1" selected="selected">1</option>
+    		  <option value="2">2</option>
+        </select></td>
+      </tr>
+      <tr align="center" valign="middle">
+        <td>数据位：</td>
+        <td>
+          <select name="DataLen" id="DataLen">
+            <option value="7">7</option>
+            <option value="8" selected="selected">8</option>
+        </select></td>
+        <td>校验位：</td>
+        <td>
+          <select name="CheckBit" id="CheckBit">
+            <option value="None" selected="selected">None</option>
+    		<option value="Odd">Odd</option>
+            <option value="Even">Even</option>
+        </select></td>
+        <td>间隔时间(ms)：</td>
+        <td><input type="text" name="IntervalSendData" value="1000" size="4"></td>
+      </tr>
+      <tr align="center" valign="middle">
+        <td colspan="3"> <input type="button" name="OpenCOMPort" id="OpenCOMPort" value="Open" /></td>
+        <td colspan="3"><input type="button" name="CloseCOMPort2" id="CloseCOMPort" value="Close" /></td>
+      </tr>
+    </table>
+    <div>
+      <div  style="float: left;border:1px solid #000;">
+      	<div align="center">
+          <label>Send Data</label>
+        </div>
+        <textarea name="SendData" cols="43" rows="4"></textarea>
+      </div>
+      <div style="float: left;border:1px solid #000;">
+        <div align="center">
+        <label>Receive Data</label>
+        </div>
+        <textarea name="SendData" cols="43" rows="4"></textarea>
+      </div>
+      <div align="center" style="clear: both;"></div>
+    </div>
+  </div>
+                        </div>
+
+                        <hr/>
                         <h2 id="show-data">Show Data</h2>
                         <div>
                             <p><a href="sensor.php">Show sensor data with GUI.</a></p>
