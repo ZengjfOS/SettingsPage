@@ -339,6 +339,30 @@ function updateRootfs(){
     });
 }
 
+function UARTOpen(){
+    
+    UARTPorts = $("#UARTPorts option:selected").val(); 
+    UARTBaudRate = $("#UARTBaudRate option:selected").val(); 
+    UARTStopBit = $("#UARTStopBit option:selected").val(); 
+    UARTDataLen = $("#UARTDataLen option:selected").val(); 
+    UARTCheckBit = $("#UARTCheckBit option:selected").val(); 
+    UARTIntervalSendData = $('input[name="UARTIntervalSendData"]').val();
+    webSocketData = 
+        {
+        "categories":"uart", 
+        "type":"command", 
+        "command":"open",
+        "UARTPorts":UARTPorts, 
+        "UARTBaudRate":UARTBaudRate, 
+        "UARTStopBit":UARTStopBit, 
+        "UARTDataLen":UARTDataLen,
+        "UARTCheckBit":UARTCheckBit,
+        "UARTIntervalSendData":UARTIntervalSendData
+        }
+    console.info(webSocketData);
+
+}
+
 $(function(){  
     var value = $('input[type="radio"][name="IPSettings"]:checked').val();
 
@@ -352,5 +376,18 @@ $(function(){
     } else {
         $("#staticSettingsAglinDiv").show();
     }
+
+    window.WebSocket = window.WebSocket || window.MozWebSocket;
+    var websocket = new WebSocket('ws://127.0.0.1:9000',
+                                  'dumb-increment-protocol');
+    websocket.onopen = function () {
+        console.info("WebSocket connect success.");
+    };
+    websocket.onerror = function () {
+        console.info("WebSocket error.");
+    };
+    websocket.onmessage = function (message) {
+        console.log(message.data);
+    };
 }); 
 
