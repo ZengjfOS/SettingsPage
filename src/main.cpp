@@ -47,14 +47,7 @@ static int callback_dumb_increment(struct lws *wsi,
 
                         printf("UARTPorts: %s\n", arm_websocket.json_data("UARTPorts"));
 
-                        arm_websocket.wsa_uart.uart_init(
-                            (char *)(arm_websocket.json_data("UARTPorts")), 
-                            (char *)(arm_websocket.json_data("UARTBaudRate")), 
-                            (char *)(arm_websocket.json_data("UARTStopBit")),
-                            (char *)(arm_websocket.json_data("UARTDataLen")),
-                            (char *)(arm_websocket.json_data("UARTCheckBit")),
-                            (char *)(arm_websocket.json_data("UARTIntervalSendData")),
-                            (char *)(arm_websocket.json_data("UARTSendData")));
+                        arm_websocket.wsa_uart.uart_init();
                     } else {
                         arm_websocket.wsa_uart.uart_close();
                         printf("UARTPorts close.\n");
@@ -62,8 +55,6 @@ static int callback_dumb_increment(struct lws *wsi,
                 }
 
             }
-
-            arm_websocket.send_data((char *)in, len);
 
             break;
         }

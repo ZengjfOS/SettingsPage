@@ -32,10 +32,6 @@ public:
 
     WSA_UART *wsa_uart;
 
-    pthread_t recv_thread;
-    pthread_t send_thread;
-
-    int  help ( int argc );
     int  init_uart_port ( void );
 
     int  get_baudrate ( char *baudRateString );
@@ -43,10 +39,13 @@ public:
     int  uart_send ( int fd, char *data, int datalen );
     int  uart_recv ( int fd, char *data, int datalen );
 
+    pthread_t recv_thread;
+    pthread_t send_thread;
+
     static void *recv_data_thread ( void *arg );
     static void *send_data_thread ( void *arg );
 
-    int uart_init(char* uart_port, char* uart_baudrate, char* uart_stop_bit, char* uart_data_len, char* uart_check_bit, char* uart_interval_send_data, char* uart_send_data);
+    int uart_init(void);
     void uart_close(void);
 } WSA_UART;
 

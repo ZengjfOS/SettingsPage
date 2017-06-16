@@ -4,13 +4,7 @@
 
 extern ARM_WebSocket arm_websocket;
 
-int WSA_UART::uart_init(char* uart_port, 
-        char* uart_baudrate, 
-        char* uart_stop_bit, 
-        char* uart_data_len, 
-        char* uart_check_bit, 
-        char* uart_interval_send_data, 
-        char* uart_send_data)
+int WSA_UART::uart_init(void)
 {
     char buf[128] = {0};
 
@@ -37,6 +31,7 @@ int WSA_UART::uart_init(char* uart_port,
 
     strcpy(send_buf, arm_websocket.json_data("UARTSendData"));
 
+    /*
     printf("UARTPorts: %s\n", port);
     printf("UARTBaudRate: %d\n", baudrate);
     printf("UARTStopBit: %d\n", stop_bit);
@@ -44,6 +39,7 @@ int WSA_UART::uart_init(char* uart_port,
     printf("UARTCheckBit: %s\n", check_bit);
     printf("UARTIntervalSendData: %d\n", interval_send_data);
     printf("UARTSendData: %s\n", send_buf);
+    */
 
     if (init_uart_port () == 0) {
 
@@ -139,19 +135,6 @@ void * WSA_UART::send_data_thread(void *arg) {
             break;
     } 
       
-}
-
-int WSA_UART::help( int argc ) {
-
-    if ( argc != 5 ) {
-        printf ( "USAGE:\n" );
-        printf ( "    command <serial absolute path> <baudrate> <workMode> <send String>\n" );
-        printf ( "    example:\n" );
-        printf ( "        ./uartRS /dev/ttymxc1 115200 3 \"1234567890ABCDEFG\"\n" );
-        return -1;
-    }
-
-    return 0;
 }
 
 int WSA_UART::uart_recv(int fd, char *data, int datalen) {  
