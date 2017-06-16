@@ -1,5 +1,6 @@
 #include <uart.h>
 #include <ARM_WebSocket.h>
+#include <jsoncpp/json.h>
 
 extern ARM_WebSocket arm_websocket;
 
@@ -11,26 +12,64 @@ int WSA_UART::uart_init(char* uart_port,
         char* uart_interval_send_data, 
         char* uart_send_data)
 {
-    strcpy(port, uart_port);
-    baudrate = get_baudrate ( uart_baudrate );
-    stop_bit = atoi(uart_stop_bit);
-    data_len = atoi(uart_data_len);
-    strcpy(check_bit, uart_check_bit);
-    interval_send_data = atoi(uart_interval_send_data);
-    strcpy(send_buf, uart_send_data);
+    char buf[128] = {0};
 
-    init_uart_port ();
+    memcpy(port, "/dev/", sizeof("/dev/"));
+    memcpy(port + (sizeof("/dev/") - 1), arm_websocket.json_data("UARTPorts"), sizeof(arm_websocket.json_data("UARTPorts")));
 
-    pthread_create ( &recv_thread, NULL, recv_data_thread, NULL );
-    pthread_create ( &send_thread, NULL, send_data_thread, NULL );
+    memcpy(buf, arm_websocket.json_data("UARTBaudRate"), sizeof(arm_websocket.json_data("UARTBaudRate")));
+    baudrate = get_baudrate (buf);
+    memset(buf, 0, sizeof(buf));
 
-    running = true;
+    memcpy(buf, arm_websocket.json_data("UARTStopBit"), sizeof(arm_websocket.json_data("UARTStopBit")));
+    stop_bit = atoi(buf);
+    memset(buf, 0, sizeof(buf));
+
+    memcpy(buf, arm_websocket.json_data("UARTDataLen"), sizeof(arm_websocket.json_data("UARTDataLen")));
+    data_len = atoi(buf);
+    memset(buf, 0, sizeof(buf));
+
+    strcpy(check_bit, arm_websocket.json_data("UARTCheckBit"));
+
+    memcpy(buf, arm_websocket.json_data("UARTIntervalSendData"), sizeof(arm_websocket.json_data("UARTIntervalSendData")));
+    interval_send_data = atoi(buf);
+    memset(buf, 0, sizeof(buf));
+
+    strcpy(send_buf, arm_websocket.json_data("UARTSendData"));
+
+    printf("UARTPorts: %s\n", port);
+    printf("UARTBaudRate: %d\n", baudrate);
+    printf("UARTStopBit: %d\n", stop_bit);
+    printf("UARTDataLen: %d\n", data_len);
+    printf("UARTCheckBit: %s\n", check_bit);
+    printf("UARTIntervalSendData: %d\n", interval_send_data);
+    printf("UARTSendData: %s\n", send_buf);
+
+    if (init_uart_port () == 0) {
+
+        pthread_create ( &recv_thread, NULL, recv_data_thread, &arm_websocket.wsa_uart );
+        pthread_create ( &send_thread, NULL, send_data_thread, &arm_websocket.wsa_uart );
+
+        running = true;
+    } else {
+        fd = -1;
+        memset(port, 0 ,sizeof(port));
+        baudrate = 0;
+        stop_bit = 0;
+        data_len = 0;
+        memset(check_bit, 0 ,sizeof(check_bit));
+        interval_send_data = 0;
+        memset(send_buf, 0 ,sizeof(send_buf));
+        running = false;
+    }
 
     return 0;  
 }
 
 void WSA_UART::uart_close(void) 
 {
+    running == false;
+
     if (pthread_cancel(recv_thread)){
         printf("close uart recv thread error.");
     }
@@ -39,26 +78,41 @@ void WSA_UART::uart_close(void)
         printf("close uart send thread error.");
     }
 
-    running == false;
+    sleep(1);
+
+    close(fd);
+    fd = -1;
+
+    memset(port, 0 ,sizeof(port));
+    baudrate = 0;
+    stop_bit = 0;
+    data_len = 0;
+    memset(check_bit, 0 ,sizeof(check_bit));
+    interval_send_data = 0;
+    memset(send_buf, 0 ,sizeof(send_buf));
 }
 
 void * WSA_UART::recv_data_thread(void *arg) {
 
     int ret = 0;
     int i = 0;
+    WSA_UART *wsa_uart = (WSA_UART *)arg;
 
     while ( 1 ) {
         ret = arm_websocket.wsa_uart.uart_recv ( 
-                arm_websocket.wsa_uart.fd, 
-                arm_websocket.wsa_uart.recv_buf, 
-                sizeof(arm_websocket.wsa_uart.recv_buf) );
-        //printf ( "%03d %s\n", i++, recvString );
-        //printf ( "%03d %s", 0, recvString );
-        printf ( "%s", arm_websocket.wsa_uart.recv_buf );
-        bzero ( arm_websocket.wsa_uart.recv_buf, sizeof(arm_websocket.wsa_uart.recv_buf) );
-        usleep ( 200000 );
+                wsa_uart->fd, 
+                wsa_uart->recv_buf, 
+                sizeof(wsa_uart->recv_buf) );
 
-        if (arm_websocket.wsa_uart.running == false) 
+        printf("rev data len: %d.\n", ret);
+
+        printf ( "rev: %s.\n", wsa_uart->recv_buf );
+        arm_websocket.send_data(wsa_uart->recv_buf, strlen(wsa_uart->recv_buf));
+        bzero ( wsa_uart->recv_buf, sizeof(wsa_uart->recv_buf) );
+
+        usleep(wsa_uart->interval_send_data * 1000);
+
+        if (wsa_uart->running == false) 
             break;
     }
 }
@@ -67,17 +121,21 @@ void * WSA_UART::send_data_thread(void *arg) {
 
     int ret = 0;
     int i = 0;
+    WSA_UART *wsa_uart = (WSA_UART *)arg;
 
     while ( 1 ) {
 
-        sprintf ( arm_websocket.wsa_uart.send_buf, "%03d: %s\r\n", i++, arm_websocket.wsa_uart.send_buf );
+        printf("zengjf send_buf: %s.\n", wsa_uart->send_buf);
         ret = arm_websocket.wsa_uart.uart_send ( 
-                arm_websocket.wsa_uart.fd, 
-                arm_websocket.wsa_uart.send_buf, 
-                strlen ( arm_websocket.wsa_uart.send_buf) );  
-        usleep ( 2000000 );
+                wsa_uart->fd, 
+                wsa_uart->send_buf, 
+                strlen ( wsa_uart->send_buf) );  
 
-        if (arm_websocket.wsa_uart.running == false) 
+        printf("send data len: %d.\n", ret);
+
+        usleep(wsa_uart->interval_send_data * 1000);
+
+        if (wsa_uart->running == false) 
             break;
     } 
       

@@ -10,6 +10,7 @@ typedef class ARM_WebSocket {
 public:
     char buf[256];
     pthread_mutex_t mutex;
+    struct lws *wsi;
 
     Json::Value root;
     Json::Reader reader;
@@ -22,6 +23,7 @@ public:
     WSA_UART wsa_uart;
 
     ARM_WebSocket();
+    void send_data(char * data, int len);
 
 } ARM_WebSocket;
 
