@@ -61,6 +61,7 @@
                             <li><a class="toctree-l4" href="#network">Network</a></li>
                             <li><a class="toctree-l4" href="#dateAndTime">Date & Time</a></li>
                             <li><a class="toctree-l4" href="#update-system">Update System</a></li>
+                            <li><a class="toctree-l4" href="#uart-communicate">UART Communicate</a></li>
                             <li><a class="toctree-l4" href="#show-data">Show Data</a></li>
                             <li><a class="toctree-l4" href="#customer-data">Customer Data</a></li>
                             <li><a class="toctree-l4" href="#web-console">Web Console</a></li>
@@ -351,73 +352,69 @@
                         <hr/>
                         <h2 id="uart-communicate">UART Communicate</h2>
                         <div>
-  <div>
-    <table border="1">
-      <tr align="center" valign="middle">
-        <td>端口号：</td>
-        <td>
-          <select name="UARTPorts" id="UARTPorts">
-            <option value="ttymxc0">ttymxc0</option>
-    		<option value="ttymxc1">ttymxc1</option>
-    		<option value="ttymxc2" selected="selected">ttymxc2</option>
-    	    <option value="ttymxc3">ttymxc3</option>
-            <option value="ttymxc4">ttymxc4</option>
-          </select></td>
-        <td>波特率：</td>
-        <td>
-          <select name="UARTBaudRate" id="UARTBaudRate">
-            <option value="9600">9600</option>
-    		  <option value="19200">19200</option>
-    		  <option value="38400">38400</option>
-    	      <option value="57600">57600</option>
-            <option value="115200" selected="selected">115200</option>
-          </select>
-        </td>
-        <td>停止位：</td>
-        <td>
-          <select name="UARTStopBit" id="UARTStopBit">
-            <option value="1" selected="selected">1</option>
-    		  <option value="2">2</option>
-        </select></td>
-      </tr>
-      <tr align="center" valign="middle">
-        <td>数据位：</td>
-        <td>
-          <select name="UARTDataLen" id="UARTDataLen">
-            <option value="7">7</option>
-            <option value="8" selected="selected">8</option>
-        </select></td>
-        <td>校验位：</td>
-        <td>
-          <select name="UARTCheckBit" id="UARTCheckBit">
-            <option value="None" selected="selected">None</option>
-    		<option value="Odd">Odd</option>
-            <option value="Even">Even</option>
-        </select></td>
-        <td>间隔时间(ms)：</td>
-        <td><input type="text" name="UARTIntervalSendData" value="1000" size="4"></td>
-      </tr>
-      <tr align="center" valign="middle">
-        <td colspan="3"> <input type="button" name="OpenUARTPort" id="OpenUARTPort" value="Open" onclick="javascript:UARTOpen()" /></td>
-        <td colspan="3"><input type="button" name="CloseUARTPort" id="CloseUARTPort" value="Close" onclick="javascript:UARTClose()"/></td>
-      </tr>
-    </table>
-    <div>
-      <div  style="float: left;border:1px solid #000;">
-      	<div align="center">
-          <label>Send Data</label>
-        </div>
-        <textarea name="UARTSendData" cols="43" rows="4"></textarea>
-      </div>
-      <div style="float: left;border:1px solid #000;">
-        <div align="center">
-        <label>Receive Data</label>
-        </div>
-        <textarea name="UARTSendData" cols="43" rows="4"></textarea>
-      </div>
-      <div align="center" style="clear: both;"></div>
-    </div>
-  </div>
+                          <div>
+                            <table border="1">
+                              <tr align="center" valign="middle">
+                                <td>端口号：</td>
+                                <td>
+                                  <select name="UARTPorts" id="UARTPorts">
+                                    <option value="ttymxc0">ttymxc0</option>
+                            		<option value="ttymxc1">ttymxc1</option>
+                            		<option value="ttymxc2" selected="selected">ttymxc2</option>
+                            	    <option value="ttymxc3">ttymxc3</option>
+                                    <option value="ttymxc4">ttymxc4</option>
+                                    <option value="ttyUSB0">ttyUSB0</option>
+                                  </select></td>
+                                <td>波特率：</td>
+                                <td>
+                                  <select name="UARTBaudRate" id="UARTBaudRate">
+                                    <option value="9600">9600</option>
+                            		  <option value="19200">19200</option>
+                            		  <option value="38400">38400</option>
+                            	      <option value="57600">57600</option>
+                                    <option value="115200" selected="selected">115200</option>
+                                  </select>
+                                </td>
+                                <td>停止位：</td>
+                                <td>
+                                  <select name="UARTStopBit" id="UARTStopBit">
+                                    <option value="1" selected="selected">1</option>
+                            		  <option value="2">2</option>
+                                </select></td>
+                              </tr>
+                              <tr align="center" valign="middle">
+                                <td>数据位：</td>
+                                <td>
+                                  <select name="UARTDataLen" id="UARTDataLen">
+                                    <option value="7">7</option>
+                                    <option value="8" selected="selected">8</option>
+                                </select></td>
+                                <td>校验位：</td>
+                                <td>
+                                  <select name="UARTCheckBit" id="UARTCheckBit">
+                                    <option value="None" selected="selected">None</option>
+                            		<option value="Odd">Odd</option>
+                                    <option value="Even">Even</option>
+                                </select></td>
+                                <td>间隔时间(ms)：</td>
+                                <td><input type="text" name="UARTIntervalSendData" value="1000" size="4"></td>
+                              </tr>
+                              <tr align="center" valign="middle">
+                                <td colspan="3"> <input type="button" name="OpenUARTPort" id="OpenUARTPort" value="Open" onclick="javascript:UARTOpen()" /></td>
+                                <td colspan="3"><input type="button" name="CloseUARTPort" id="CloseUARTPort" value="Close" onclick="javascript:UARTClose()"/></td>
+                              </tr>
+                            </table>
+                            <div>
+                              	<div align="center">
+                                  <label>Send Data</label>
+                                </div>
+                                <textarea name="UARTSendData" id="UARTSendData" rows="2"></textarea>
+                                <div align="center">
+                                <label>Receive Data</label>
+                                </div>
+                                <textarea name="UARTReceiveData" id="UARTReceiveData" rows="5"></textarea>
+                            </div>
+                          </div>
                         </div>
 
                         <hr/>
@@ -449,6 +446,7 @@
                         </footer>
                     </div>
                 </div>
+            </div>
         </section>
         </div>
         <div class="rst-versions" role="note" style="cursor: pointer">

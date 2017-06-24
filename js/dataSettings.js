@@ -339,28 +339,52 @@ function updateRootfs(){
     });
 }
 
+window.WebSocket = window.WebSocket || window.MozWebSocket;
+var websocket = new WebSocket('ws://127.0.0.1:9000',
+                              'dumb-increment-protocol');
+
 function UARTOpen(){
-    
+
     UARTPorts = $("#UARTPorts option:selected").val(); 
     UARTBaudRate = $("#UARTBaudRate option:selected").val(); 
     UARTStopBit = $("#UARTStopBit option:selected").val(); 
     UARTDataLen = $("#UARTDataLen option:selected").val(); 
     UARTCheckBit = $("#UARTCheckBit option:selected").val(); 
     UARTIntervalSendData = $('input[name="UARTIntervalSendData"]').val();
+    UARTIntervalSendData = $('input[name="UARTIntervalSendData"]').val();
+    UARTSendData = $("#UARTSendData").val();
+
     webSocketData = 
-        {
+    {
         "categories":"uart", 
-        "type":"command", 
+        "type":"client", 
         "command":"open",
         "UARTPorts":UARTPorts, 
-        "UARTBaudRate":UARTBaudRate, 
+        "UARTBaudrate":UARTBaudRate, 
         "UARTStopBit":UARTStopBit, 
         "UARTDataLen":UARTDataLen,
         "UARTCheckBit":UARTCheckBit,
-        "UARTIntervalSendData":UARTIntervalSendData
-        }
-    console.info(webSocketData);
+        "UARTIntervalSendData":UARTIntervalSendData,
+        "UARTSendData":UARTSendData
+    }
 
+    // console.info(webSocketData);
+    websocket.send(JSON.stringify(webSocketData));
+
+    $('#UARTReceiveData').val("");
+}
+
+function UARTClose(){
+    
+    webSocketData = 
+    {
+        "categories":"uart", 
+        "type":"client", 
+        "command":"close",
+    }
+    
+    // console.info(webSocketData);
+    websocket.send(JSON.stringify(webSocketData));
 }
 
 $(function(){  
@@ -377,9 +401,6 @@ $(function(){
         $("#staticSettingsAglinDiv").show();
     }
 
-    window.WebSocket = window.WebSocket || window.MozWebSocket;
-    var websocket = new WebSocket('ws://127.0.0.1:9000',
-                                  'dumb-increment-protocol');
     websocket.onopen = function () {
         console.info("WebSocket connect success.");
     };
@@ -387,7 +408,18 @@ $(function(){
         console.info("WebSocket error.");
     };
     websocket.onmessage = function (message) {
+
         console.log(message.data);
+
+        root = eval("(" + message.data + ")");
+
+        if (root["categories"] == "uart" && root["type"] == "server" && root["command"] == "receive") {
+            $('#UARTReceiveData').val($('#UARTReceiveData').val() + "send: " + root["send_index"] + ", recv: " + root["recv_index"] + ", cmp: " + root["cmp_index"] + ", data: " + root["data"]);
+            if($('#UARTReceiveData').length)
+                $('#UARTReceiveData').scrollTop($('#UARTReceiveData')[0].scrollHeight - $('#UARTReceiveData').height());
+        }
     };
+
+    $("#UARTSendData").val("1234567890\n");
 }); 
 

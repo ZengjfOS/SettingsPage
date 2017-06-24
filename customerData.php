@@ -87,18 +87,32 @@
                         <p>This Page just for ARM machine Customer Data settings.</p>
                         <hr/>
                         <div>
-                            <div style="width:280px;">
-                                <span style="float: left;">RemoteIP:</span>
-                                <input style="float: right;text-align:center;" name="remoteIP" type="text" value=
-                                    <?php
-                                        $command="grep 'IP = ' /usr/share/huishu/config.conf | head -n 1 | awk -F '=' '{print $2}'";
-                                        $remoateIP = exec ($command);
-                                        echo "\"".$remoateIP."\"";
-                                        ?>
-                                    >
-                                <br>
-                                <div align="center" style="clear: both;"></div>
-                            </div>
+                          <div style="width:280px;">
+                            <span style="float: left;">RemoteIP:</span>
+                            <input style="float: right;text-align:center;" name="remoteIP" type="text" value=
+                              <?php
+                                  $command="grep 'IP = ' /usr/share/huishu/config.conf | head -n 1 | awk -F '=' '{print $2}'";
+                                  $remoateIP = exec ($command);
+                                  echo "\"".$remoateIP."\"";
+                                  ?>
+                              >
+                            <br>
+                            <div align="center" style="clear: both;"></div>
+                          </div>
+
+                          <div>
+                              <?php
+                                  // Parse with sections
+                                  $ini_array = parse_ini_file("config.ini", true);
+                                  print_r($ini_array["remote"]["ip"]."\n");
+                                  while(current($ini_array)) {
+                                      echo key($ini_array)."\n";
+                                      next($ini_array);
+                                  }
+                                  print_r($ini_array);
+                                  ?>
+                          </div>
+
                         </div>
                         <div align="center" style="margin-top:20px;margin-bottom:20px">
                             <input type="button" onClick="javascript:customerDate()" value="Submit">
