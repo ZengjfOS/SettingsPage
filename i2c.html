@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+
+<div>
+  <table border="1">
+    <tr align="center" valign="middle">
+      <td>I2C Bus:</td>
+      <td>
+        <select name="I2CBusPort" id="I2CBusPort">
+          <option value="i2c0">i2c0</option>
+    		<option value="i2c1">i2c1</option>
+    		<option value="i2c2" selected="selected">i2c2</option>
+    	    <option value="i2c3">i2c3</option>
+          <option value="i2c4">i2c4</option>
+        </select>
+      </td>
+      <td>IC Address:</td>
+      <td><input type="text" name="I2CICAddress" value="0x50" size="8"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>Reg Address:</td>
+      <td><input type="text" name="I2CICRegAddress" value="0x00" size="8"></td>
+      <td>Data Length:</td>
+      <td><input type="text" name="I2CICDataLength" value="0x00" size="8"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td colspan="2"> <input type="button" name="I2CICRead" id="I2CICRead" value="Read" onclick="javascript:I2CICRead()" /></td>
+      <td colspan="2"> <input type="button" name="I2CICWrite" id="I2CICWrite" value="Write" onclick="javascript:I2CICWrite()" /></td>
+    </tr>
+  </table>
+  </div>
+  <div>
+    <div  style="border:1px solid #000;">
+      <div align="center">
+        <label>Send Data</label>
+      </div>
+      <textarea name="I2CICReadData" cols="43" rows="4"></textarea>
+    </div>
+    <div style="border:1px solid #000;">
+      <div align="center">
+      <label>Receive Data</label>
+      </div>
+      <textarea name="I2CICWriteData" cols="43" rows="4"></textarea>
+    </div>
+    <div align="center" style="clear: both;"></div>
+  </div>
+</body>
+</html>
