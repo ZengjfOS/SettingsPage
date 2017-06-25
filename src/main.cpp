@@ -5,7 +5,7 @@
 #include <libwebsockets.h>
 
 #include <ARM_WebSocket.h>
-#include <jsoncpp/json.h>
+#include <json/json.h>
 #include <uart.h>
 
 ARM_WebSocket arm_websocket;

@@ -11,6 +11,7 @@
 #include <errno.h>  
 #include <pthread.h>
 #include <cstring>
+#include <json/json.h>
 
 typedef class WSA_UART {
 
@@ -29,8 +30,13 @@ public:
 
     char send_buf[512];
     char recv_buf[512];
+    int send_index;
+    int recv_index;
+    int cmp_index;
 
     WSA_UART *wsa_uart;
+
+    Json::Value *root;
 
     int  init_uart_port ( void );
 

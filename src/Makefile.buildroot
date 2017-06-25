@@ -1,13 +1,23 @@
-.PHONY : clean
-
 buildrootHome=/home/aplex/zengjf/zengjfos/buildroot-2016.08
-gccPath=output/host/usr/bin/arm-none-linux-gnueabi-gcc
-includePath=output/build/libwebsockets-v1.7.5/lib/
-libPath=output/target/usr/lib/
+gccPath=output/host/usr/bin/arm-none-linux-gnueabi-g++
+
+SRC = ARM_WebSocket.cpp \
+	  main.cpp \
+	  uart/uart.cpp
 
 all:
-	${buildrootHome}/${gccPath} -I${buildrootHome}/${includePath} -L${buildrootHome}/${libPath} -lwebsockets main.c -o lwsserver
+	${buildrootHome}/${gccPath} \
+		-I${buildrootHome}/output/target/include/ \
+		-L${buildrootHome}/output/target/lib/ \
+		-L${buildrootHome}/output/target/usr/lib/ \
+		-lpthread \
+		-Iinclude \
+		-lwebsockets \
+		-ljsoncpp \
+		$(SRC) \
+		-o lwsserver
 
+.PHONY: clean
 clean:
 	rm lwsserver
 

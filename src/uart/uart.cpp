@@ -1,6 +1,6 @@
 #include <uart.h>
 #include <ARM_WebSocket.h>
-#include <jsoncpp/json.h>
+#include <json/json.h>
 
 extern ARM_WebSocket arm_websocket;
 
@@ -11,7 +11,7 @@ int WSA_UART::uart_init(void)
     memcpy(port, "/dev/", sizeof("/dev/"));
     memcpy(port + (sizeof("/dev/") - 1), arm_websocket.json_data("UARTPorts"), sizeof(arm_websocket.json_data("UARTPorts")));
 
-    memcpy(buf, arm_websocket.json_data("UARTBaudRate"), sizeof(arm_websocket.json_data("UARTBaudRate")));
+    memcpy(buf, arm_websocket.json_data("UARTBaudrate"), sizeof(arm_websocket.json_data("UARTBaudrate")));
     baudrate = get_baudrate (buf);
     memset(buf, 0, sizeof(buf));
 
@@ -49,6 +49,7 @@ int WSA_UART::uart_init(void)
         running = true;
     } else {
         fd = -1;
+
         memset(port, 0 ,sizeof(port));
         baudrate = 0;
         stop_bit = 0;
@@ -56,6 +57,7 @@ int WSA_UART::uart_init(void)
         memset(check_bit, 0 ,sizeof(check_bit));
         interval_send_data = 0;
         memset(send_buf, 0 ,sizeof(send_buf));
+
         running = false;
     }
 
@@ -91,8 +93,11 @@ void WSA_UART::uart_close(void)
 void * WSA_UART::recv_data_thread(void *arg) {
 
     int ret = 0;
-    int i = 0;
     WSA_UART *wsa_uart = (WSA_UART *)arg;
+    char buf[512] = {0};
+
+    wsa_uart->recv_index = 0;
+    wsa_uart->cmp_index = 0;
 
     while ( 1 ) {
         ret = arm_websocket.wsa_uart.uart_recv ( 
@@ -100,11 +105,28 @@ void * WSA_UART::recv_data_thread(void *arg) {
                 wsa_uart->recv_buf, 
                 sizeof(wsa_uart->recv_buf) );
 
-        printf("rev data len: %d.\n", ret);
+        Json::Value root;
+        root["categories"] = "uart";
+        root["type"] = "server";
+        root["command"] = "receive";
+        root["data"] = wsa_uart->recv_buf;
 
-        printf ( "rev: %s.\n", wsa_uart->recv_buf );
-        arm_websocket.send_data(wsa_uart->recv_buf, strlen(wsa_uart->recv_buf));
+        if (strcmp(wsa_uart->recv_buf, wsa_uart->send_buf) == 0) {
+            wsa_uart->cmp_index += 1;
+            root["cmp_index"] = wsa_uart->cmp_index;
+        }
+
+        wsa_uart->recv_index += 1;
+        root["recv_index"] = wsa_uart->recv_index;
+        root["send_index"] = wsa_uart->send_index;
+
+        memcpy(buf, root.toStyledString().c_str(), strlen(root.toStyledString().c_str()));
+        printf("debug uart receive data: %s.\n", buf);
+
+        arm_websocket.send_data(buf, strlen(buf));
+
         bzero ( wsa_uart->recv_buf, sizeof(wsa_uart->recv_buf) );
+        bzero ( buf, sizeof(buf) );
 
         usleep(wsa_uart->interval_send_data * 1000);
 
@@ -119,15 +141,16 @@ void * WSA_UART::send_data_thread(void *arg) {
     int i = 0;
     WSA_UART *wsa_uart = (WSA_UART *)arg;
 
+    wsa_uart->send_index = 0;
+
     while ( 1 ) {
 
-        printf("zengjf send_buf: %s.\n", wsa_uart->send_buf);
         ret = arm_websocket.wsa_uart.uart_send ( 
                 wsa_uart->fd, 
                 wsa_uart->send_buf, 
                 strlen ( wsa_uart->send_buf) );  
 
-        printf("send data len: %d.\n", ret);
+        wsa_uart->send_index += 1;
 
         usleep(wsa_uart->interval_send_data * 1000);
 
@@ -150,11 +173,11 @@ int WSA_UART::uart_send(int fd, char *data, int datalen) {
 
     int len = 0;  
 
-    len = write ( fd, data, datalen );     //实际写入的长度  
+    len = write ( fd, data, datalen );     
     if(len == datalen) {  
         return len;  
     } else {  
-        tcflush(fd, TCOFLUSH);          //TCOFLUSH刷新写入的数据但不传送  
+        tcflush(fd, TCOFLUSH);          
         return -1;  
     }  
       
@@ -163,36 +186,42 @@ int WSA_UART::uart_send(int fd, char *data, int datalen) {
 
 int WSA_UART::init_uart_port( void ) {  
 
-    //fd = open( port, O_RDWR | O_NOCTTY | O_NDELAY );  
-    arm_websocket.wsa_uart.fd = open ( arm_websocket.wsa_uart.port, O_RDWR );  
-    if ( arm_websocket.wsa_uart.fd < 0 ) {  
+    fd = open ( port, O_RDWR );  
+    if ( fd < 0 ) {  
         perror ( "open" );  
         return -1;  
     }  
       
-    // 串口主要设置结构体termios <termios.h>  
     struct termios options;  
       
-    /**
-     * tcgetattr函数用于获取与终端相关的参数，参数fd为终端的文件描述符，
-     * 返回的结果保存在termios结构体中 
-     */  
-    tcgetattr ( arm_websocket.wsa_uart.fd, &options );  
-    /**2. 修改所获得的参数*/  
-    options.c_cflag |= (CLOCAL | CREAD);    //设置控制模式状态，本地连接，接收使能  
-    options.c_cflag &= ~CSIZE;              //字符长度，设置数据位之前一定要屏掉这个位  
-    options.c_cflag &= ~CRTSCTS;            //无硬件流控  
-    options.c_cflag |= CS8;                 //8位数据长度  
-    options.c_cflag &= ~CSTOPB;             //1位停止位  
-    options.c_iflag |= IGNPAR;              //无奇偶检验位  
-    options.c_oflag = 0;                    //输出模式  
-    options.c_lflag = 0;                    //不激活终端模式  
-    cfsetospeed ( &options, arm_websocket.wsa_uart.baudrate );        //设置波特率  
-    //cfsetospeed(&options, B2000000);//设置波特率  
+    tcgetattr ( fd, &options );  
+    options.c_cflag |= (CLOCAL | CREAD);    
+    options.c_cflag &= ~CSIZE;              
+    options.c_cflag &= ~CRTSCTS;            
+
+    if (data_len == 7)
+        options.c_cflag |= CS7;                 
+    else
+        options.c_cflag |= CS8;                 
+
+    if (stop_bit == 1) 
+        options.c_cflag &= ~CSTOPB;             
+    else
+        options.c_cflag |= CSTOPB;             
+
+    if (strcmp(check_bit, "None") == 0)
+        options.c_iflag |= IGNPAR;              
+    else if (strcmp(check_bit, "Odd") == 0)
+        options.c_iflag |= PARODD;              
+    else
+        options.c_iflag &= ~PARODD;              
+
+    options.c_oflag = 0;                    
+    options.c_lflag = 0;                    
+    cfsetospeed ( &options, baudrate );
       
-    /**3. 设置新属性，TCSANOW：所有改变立即生效*/  
-    tcflush ( arm_websocket.wsa_uart.fd, TCIFLUSH );           //溢出数据可以接收，但不读  
-    tcsetattr ( arm_websocket.wsa_uart.fd, TCSANOW, &options );  
+    tcflush ( fd, TCIFLUSH );           
+    tcsetattr ( fd, TCSANOW, &options );  
       
     return 0;  
 }  

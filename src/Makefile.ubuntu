@@ -3,7 +3,7 @@ SRC = ARM_WebSocket.cpp \
 	  uart/uart.cpp
 
 all:
-	g++ $(SRC) -lwebsockets -lpthread -Iinclude libjson.so -o lwsserver
+	g++ $(SRC) -lwebsockets -lpthread -Iinclude -ljsoncpp -o lwsserver
 
 .PHONY: clean
 clean:

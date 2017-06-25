@@ -2,7 +2,7 @@
 #define __ARM_WEBSOCKET_H__
 
 #include <libwebsockets.h>
-#include <jsoncpp/json.h>
+#include <json/json.h>
 #include <uart.h>
 
 typedef class ARM_WebSocket {
@@ -14,6 +14,7 @@ public:
 
     Json::Value root;
     Json::Reader reader;
+    Json::FastWriter writer;
     const char * json_data(const char *);
 
     struct lws_context_creation_info context_info;
