@@ -418,6 +418,107 @@
                         </div>
 
                         <hr/>
+                        <h2 id="GPIOPort">GPIO Port</h2>
+<div>
+  <table border="1">
+    <tr align="center" valign="middle">
+      <td>Index</td>
+      <td>Gpio Mode</td>
+      <td>Gpio Value</td>
+      <td>Red:0, Green:1</td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>1</td>
+      <td>
+        <select name="GPIOPort1Mode" id="GPIOPort1Mode">
+  		  <option value="Input">Input</option>
+          <option value="Output" selected="selected">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>2</td>
+      <td>
+        <select name="GPIOPort2Mode" id="GPIOPort2Mode">
+  		  <option value="Input">Input</option>
+          <option value="Output" selected="selected">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>3</td>
+      <td>
+        <select name="GPIOPort3Mode" id="GPIOPort3Mode">
+  		  <option value="Input">Input</option>
+          <option value="Output" selected="selected">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>4</td>
+      <td>
+        <select name="GPIOPort4Mode" id="GPIOPort4Mode">
+  		  <option value="Input">Input</option>
+          <option value="Output" selected="selected">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>5</td>
+      <td>
+        <select name="GPIOPort5Mode" id="GPIOPort5Mode">
+  		  <option value="Input" selected="selected">Input</option>
+          <option value="Output">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>6</td>
+      <td>
+        <select name="GPIOPort6Mode" id="GPIOPort6Mode">
+  		  <option value="Input" selected="selected">Input</option>
+          <option value="Output">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>7</td>
+      <td>
+        <select name="GPIOPort7Mode" id="GPIOPort7Mode">
+  		  <option value="Input" selected="selected">Input</option>
+          <option value="Output">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+    <tr align="center" valign="middle">
+      <td>8</td>
+      <td>
+        <select name="GPIOPort8Mode" id="GPIOPort8Mode">
+  		  <option value="Input" selected="selected">Input</option>
+          <option value="Output">Output</option>
+        </select>
+      </td>
+      <td>0</td>
+      <td style="background-color:red"></td>
+    </tr>
+  </table>
+</div>
+
+                        <hr/>
                         <h2 id="show-data">Show Data</h2>
                         <div>
                             <p><a href="sensor.php">Show sensor data with GUI.</a></p>

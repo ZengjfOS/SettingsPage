@@ -84,38 +84,96 @@
                 <div role="main">
                     <div class="section">
                         <h1 id="welcome-to-arm-settings">Welcome to Customer Data</h1>
-                        <p>This Page just for ARM machine Customer Data settings.</p>
+                          <p>This Page just for ARM machine Customer Data settings.</p>
                         <hr/>
-                        <div>
-                          <div style="width:280px;">
-                            <span style="float: left;">RemoteIP:</span>
-                            <input style="float: right;text-align:center;" name="remoteIP" type="text" value=
-                              <?php
-                                  $command="grep 'IP = ' /usr/share/huishu/config.conf | head -n 1 | awk -F '=' '{print $2}'";
-                                  $remoateIP = exec ($command);
-                                  echo "\"".$remoateIP."\"";
-                                  ?>
-                              >
-                            <br>
-                            <div align="center" style="clear: both;"></div>
+                          <!-- configure -->
+                          <div>
+                            <table border="1">
+                              <tr align="center">
+                                <td colspan="2">Remote Infomations</td>
+                              </tr>
+                              <tr>
+                                <td><label for="RmoteIP">IP:</label></td>
+                                <td><input type="text" name="RmoteIP" id="RmoteIP" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="RemotePort">Port:</label></td>
+                                <td><input type="text" name="RemotePort" id="RemotePort" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="RemoteUser">User:</label></td>
+                                <td><input type="text" name="RemoteUser" id="RemoteUser" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="RemotePassword">Password:</label></td>
+                                <td><input type="text" name="RemotePassword" id="RemotePassword" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="RemoteDatabase">Database:</label></td>
+                                <td><input type="text" name="RemoteDatabase" id="RemoteDatabase" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="RemoteTable">Table:</label></td>
+                                <td><input type="text" name="RemoteTable" id="RemoteTable" /></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">Localhost Infomations</td>
+                              </tr>
+                                <tr>
+                                <td><label for="LocalIP">IP:</label></td>
+                                <td><input type="text" name="LocalIP" id="LocalIP" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="LocalPort">Port:</label></td>
+                                <td><input type="text" name="LocalPort" id="LocalPort" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="LocalUser">User:</label></td>
+                                <td><input type="text" name="LocalUser" id="LocalUser" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="LocalPassword">Password:</label></td>
+                                <td><input type="text" name="LocalPassword" id="LocalPassword" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="LocalDatabase">Database:</label></td>
+                                <td><input type="text" name="LocalDatabase" id="LocalDatabase" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="LocalTable">Table:</label></td>
+                                <td><input type="text" name="LocalTable" id="LocalTable" /></td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">Data Update Interval Time</td>
+                              </tr>
+                              <tr>
+                                <td><label for="DBHearbeat">Heartbeat Time:</label></td>
+                                <td><input type="text" name="DBHearbeat" id="DBHearbeat" /></td>
+                              </tr>
+                              <tr>
+                                <td><label for="DBUpdate">DataBase Time:</label></td>
+                                <td><input type="text" name="DBUpdate" id="DBUpdate" /></td>
+                              </tr>
+                              <tr align="center" valign="middle">
+                                <td colspan="2">
+                                  <input type="button" onClick="javascript:customerDate()" value="Submit">
+                                </td>
+                              </tr>
+                            </table>
                           </div>
 
-                          <div>
+
                               <?php
                                   // Parse with sections
                                   $ini_array = parse_ini_file("config.ini", true);
-                                  print_r($ini_array["remote"]["ip"]."\n");
+                                  // print_r($ini_array["remote"]["ip"]."\n");
                                   while(current($ini_array)) {
-                                      echo key($ini_array)."\n";
+                                      // echo key($ini_array)."\n";
                                       next($ini_array);
                                   }
-                                  print_r($ini_array);
+                                  // print_r($ini_array);
                                   ?>
                           </div>
-
-                        </div>
-                        <div align="center" style="margin-top:20px;margin-bottom:20px">
-                            <input type="button" onClick="javascript:customerDate()" value="Submit">
                         </div>
 
                         <h1 id="update_application">Update Application</h1>
