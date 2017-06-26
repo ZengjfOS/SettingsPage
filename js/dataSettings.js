@@ -342,7 +342,6 @@ function updateRootfs(){
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 var websocket = new WebSocket('ws://127.0.0.1:9000',
                               'dumb-increment-protocol');
-
 function UARTOpen(){
 
     UARTPorts = $("#UARTPorts option:selected").val(); 
@@ -406,6 +405,7 @@ $(function(){
     };
     websocket.onerror = function () {
         console.info("WebSocket error.");
+        alert("Please Check WebSocket Server Working Well.");
     };
     websocket.onmessage = function (message) {
 

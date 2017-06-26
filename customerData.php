@@ -56,7 +56,7 @@
                     <li class="toctree-l1 current">
                         <a class="current" href=".">Customer Data</a>
                         <ul>
-                            <li class="toctree-l3"><a href="#welcome-to-arm-settings">Welcome to Customer Data</a></li>
+                            <li class="toctree-l3"><a href="#customer_data">Customer Data</a></li>
                             <li class="toctree-l3"><a href="#update_application">Update Application</a></li>
                         </ul>
                     </li>
@@ -83,97 +83,95 @@
                 </div>
                 <div role="main">
                     <div class="section">
-                        <h1 id="welcome-to-arm-settings">Welcome to Customer Data</h1>
+                        <h1 id="customer_data">Customer Data</h1>
                           <p>This Page just for ARM machine Customer Data settings.</p>
                         <hr/>
-                          <!-- configure -->
-                          <div>
-                            <table border="1">
-                              <tr align="center">
-                                <td colspan="2">Remote Infomations</td>
-                              </tr>
+                        <?php
+                            // Parse with sections
+                            $ini_array = parse_ini_file("config.ini", true);
+                            /*
+                            print_r($ini_array["remote"]["ip"]."\n");
+                            while(current($ini_array)) {
+                                echo key($ini_array)."\n";
+                                next($ini_array);
+                            }
+                            print_r($ini_array);
+                             */
+                        ?>
+                        <!-- configure -->
+                        <div>
+                          <table border="1">
+                            <tr align="center">
+                              <td colspan="2">Remote Infomations</td>
+                            </tr>
+                            <tr>
+                              <td><label for="RemoteIP">IP:</label></td>
+                              <td><input type="text" name="RemoteIP" id="RemoteIP" value="<?php echo $ini_array["remote"]["ip"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="RemotePort">Port:</label></td>
+                              <td><input type="text" name="RemotePort" id="RemotePort" value="<?php echo $ini_array["remote"]["port"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="RemoteUser">User:</label></td>
+                              <td><input type="text" name="RemoteUser" id="RemoteUser" value="<?php echo $ini_array["remote"]["user"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="RemotePassword">Password:</label></td>
+                              <td><input type="text" name="RemotePassword" id="RemotePassword" value="<?php echo $ini_array["remote"]["password"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="RemoteDatabase">Database:</label></td>
+                              <td><input type="text" name="RemoteDatabase" id="RemoteDatabase" value="<?php echo $ini_array["remote"]["database"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="RemoteTable">Table:</label></td>
+                              <td><input type="text" name="RemoteTable" id="RemoteTable" value="<?php echo $ini_array["remote"]["table"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2">Localhost Infomations</td>
+                            </tr>
                               <tr>
-                                <td><label for="RmoteIP">IP:</label></td>
-                                <td><input type="text" name="RmoteIP" id="RmoteIP" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="RemotePort">Port:</label></td>
-                                <td><input type="text" name="RemotePort" id="RemotePort" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="RemoteUser">User:</label></td>
-                                <td><input type="text" name="RemoteUser" id="RemoteUser" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="RemotePassword">Password:</label></td>
-                                <td><input type="text" name="RemotePassword" id="RemotePassword" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="RemoteDatabase">Database:</label></td>
-                                <td><input type="text" name="RemoteDatabase" id="RemoteDatabase" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="RemoteTable">Table:</label></td>
-                                <td><input type="text" name="RemoteTable" id="RemoteTable" /></td>
-                              </tr>
-                              <tr>
-                                <td colspan="2">Localhost Infomations</td>
-                              </tr>
-                                <tr>
-                                <td><label for="LocalIP">IP:</label></td>
-                                <td><input type="text" name="LocalIP" id="LocalIP" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="LocalPort">Port:</label></td>
-                                <td><input type="text" name="LocalPort" id="LocalPort" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="LocalUser">User:</label></td>
-                                <td><input type="text" name="LocalUser" id="LocalUser" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="LocalPassword">Password:</label></td>
-                                <td><input type="text" name="LocalPassword" id="LocalPassword" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="LocalDatabase">Database:</label></td>
-                                <td><input type="text" name="LocalDatabase" id="LocalDatabase" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="LocalTable">Table:</label></td>
-                                <td><input type="text" name="LocalTable" id="LocalTable" /></td>
-                              </tr>
-                              <tr>
-                                <td colspan="2">Data Update Interval Time</td>
-                              </tr>
-                              <tr>
-                                <td><label for="DBHearbeat">Heartbeat Time:</label></td>
-                                <td><input type="text" name="DBHearbeat" id="DBHearbeat" /></td>
-                              </tr>
-                              <tr>
-                                <td><label for="DBUpdate">DataBase Time:</label></td>
-                                <td><input type="text" name="DBUpdate" id="DBUpdate" /></td>
-                              </tr>
-                              <tr align="center" valign="middle">
-                                <td colspan="2">
-                                  <input type="button" onClick="javascript:customerDate()" value="Submit">
-                                </td>
-                              </tr>
-                            </table>
-                          </div>
-
-
-                              <?php
-                                  // Parse with sections
-                                  $ini_array = parse_ini_file("config.ini", true);
-                                  // print_r($ini_array["remote"]["ip"]."\n");
-                                  while(current($ini_array)) {
-                                      // echo key($ini_array)."\n";
-                                      next($ini_array);
-                                  }
-                                  // print_r($ini_array);
-                                  ?>
-                          </div>
+                              <td><label for="LocalIP">IP:</label></td>
+                              <td><input type="text" name="LocalIP" id="LocalIP" value="<?php echo $ini_array["localhost"]["ip"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="LocalPort">Port:</label></td>
+                              <td><input type="text" name="LocalPort" id="LocalPort" value="<?php echo $ini_array["localhost"]["port"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="LocalUser">User:</label></td>
+                              <td><input type="text" name="LocalUser" id="LocalUser" value="<?php echo $ini_array["localhost"]["user"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="LocalPassword">Password:</label></td>
+                              <td><input type="text" name="LocalPassword" id="LocalPassword" value="<?php echo $ini_array["localhost"]["password"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="LocalDatabase">Database:</label></td>
+                              <td><input type="text" name="LocalDatabase" id="LocalDatabase" value="<?php echo $ini_array["localhost"]["database"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="LocalTable">Table:</label></td>
+                              <td><input type="text" name="LocalTable" id="LocalTable" value="<?php echo $ini_array["localhost"]["table"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td colspan="2">Data Update Interval Time</td>
+                            </tr>
+                            <tr>
+                              <td><label for="DBHeartbeat">Heartbeat Time:</label></td>
+                              <td><input type="text" name="DBHeartbeat" id="DBHeartbeat" value="<?php echo $ini_array["interval"]["heartbeat"] ?>" /></td>
+                            </tr>
+                            <tr>
+                              <td><label for="DBUpdate">DataBase Time:</label></td>
+                              <td><input type="text" name="DBUpdate" id="DBUpdate" value="<?php echo $ini_array["interval"]["upload_data"] ?>" /></td>
+                            </tr>
+                            <tr align="center" valign="middle">
+                              <td colspan="2">
+                                <input type="button" onClick="javascript:customer_config_update()" value="Submit">
+                              </td>
+                            </tr>
+                          </table>
                         </div>
 
                         <h1 id="update_application">Update Application</h1>
@@ -221,6 +219,7 @@
 
         <!-- for Settings -->
         <script type="text/javascript" src="js/customerDataSettings.js"></script>
+
     </body>
 </html>
 <!--
