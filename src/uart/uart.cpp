@@ -9,27 +9,27 @@ int WSA_UART::uart_init(void)
     char buf[128] = {0};
 
     memcpy(port, "/dev/", sizeof("/dev/"));
-    memcpy(port + (sizeof("/dev/") - 1), arm_websocket.json_data("UARTPorts"), sizeof(arm_websocket.json_data("UARTPorts")));
+    memcpy(port + (sizeof("/dev/") - 1), arm_websocket.client_json_data("UARTPorts"), sizeof(arm_websocket.client_json_data("UARTPorts")));
 
-    memcpy(buf, arm_websocket.json_data("UARTBaudrate"), sizeof(arm_websocket.json_data("UARTBaudrate")));
+    memcpy(buf, arm_websocket.client_json_data("UARTBaudrate"), sizeof(arm_websocket.client_json_data("UARTBaudrate")));
     baudrate = get_baudrate (buf);
     memset(buf, 0, sizeof(buf));
 
-    memcpy(buf, arm_websocket.json_data("UARTStopBit"), sizeof(arm_websocket.json_data("UARTStopBit")));
+    memcpy(buf, arm_websocket.client_json_data("UARTStopBit"), sizeof(arm_websocket.client_json_data("UARTStopBit")));
     stop_bit = atoi(buf);
     memset(buf, 0, sizeof(buf));
 
-    memcpy(buf, arm_websocket.json_data("UARTDataLen"), sizeof(arm_websocket.json_data("UARTDataLen")));
+    memcpy(buf, arm_websocket.client_json_data("UARTDataLen"), sizeof(arm_websocket.client_json_data("UARTDataLen")));
     data_len = atoi(buf);
     memset(buf, 0, sizeof(buf));
 
-    strcpy(check_bit, arm_websocket.json_data("UARTCheckBit"));
+    strcpy(check_bit, arm_websocket.client_json_data("UARTCheckBit"));
 
-    memcpy(buf, arm_websocket.json_data("UARTIntervalSendData"), sizeof(arm_websocket.json_data("UARTIntervalSendData")));
+    memcpy(buf, arm_websocket.client_json_data("UARTIntervalSendData"), sizeof(arm_websocket.client_json_data("UARTIntervalSendData")));
     interval_send_data = atoi(buf);
     memset(buf, 0, sizeof(buf));
 
-    strcpy(send_buf, arm_websocket.json_data("UARTSendData"));
+    strcpy(send_buf, arm_websocket.client_json_data("UARTSendData"));
 
     /*
     printf("UARTPorts: %s\n", port);

@@ -33,23 +33,37 @@ static int callback_dumb_increment(struct lws *wsi,
 
             printf("received data: %s\n", (char *) in);
 
-            if (arm_websocket.reader.parse((char *)in, arm_websocket.root, false)) {
+            if (arm_websocket.reader.parse((char *)in, arm_websocket.client_root, false)) {
 
-                printf("\n\ncategories: %s\n", arm_websocket.json_data("categories"));
+                printf("\n\ncategories: %s\n", arm_websocket.client_json_data("categories"));
 
-                if (strcmp(arm_websocket.json_data("categories"), "uart") == 0) {
-                    if (strcmp(arm_websocket.json_data("command"), "open") == 0) {
+                if (strcmp(arm_websocket.client_json_data("categories"), "uart") == 0) {
+                    if (strcmp(arm_websocket.client_json_data("command"), "open") == 0) {
 
                         if (arm_websocket.wsa_uart.running == true) {
                             arm_websocket.wsa_uart.uart_close();
                             printf("UARTPorts close.\n");
                         } 
 
-                        printf("UARTPorts: %s\n", arm_websocket.json_data("UARTPorts"));
+                        printf("UARTPorts: %s\n", arm_websocket.client_json_data("UARTPorts"));
 
                         arm_websocket.wsa_uart.uart_init();
                     } else {
                         arm_websocket.wsa_uart.uart_close();
+                        printf("UARTPorts close.\n");
+                    }
+                } else if(strcmp(arm_websocket.client_json_data("categories"), "gpio") == 0) {
+                    if (strcmp(arm_websocket.client_json_data("command"), "open") == 0) {
+
+                        if (arm_websocket.wsa_gpio.running == true) {
+                            arm_websocket.wsa_gpio.gpio_close();
+                            printf("GPIO close.\n");
+                        } 
+
+
+                        arm_websocket.wsa_gpio.gpio_init();
+                    } else {
+                        arm_websocket.wsa_gpio.gpio_close();
                         printf("UARTPorts close.\n");
                     }
                 }
@@ -64,8 +78,6 @@ static int callback_dumb_increment(struct lws *wsi,
     
     return 0;
 }
-
-
 
 static struct lws_protocols protocols[] = {
     /* first protocol must always be HTTP handler */
@@ -108,8 +120,8 @@ int main(void) {
         return -1;
     }
     
-    printf("starting server...\n");
-    
+    printf("starting server with thread: %d...\n", lws_get_count_threads(arm_websocket.context));
+	
     // infinite loop, to end this server send SIGTERM. (CTRL+C)
     while (1) {
         lws_service(arm_websocket.context, 50);

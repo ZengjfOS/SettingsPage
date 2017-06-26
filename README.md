@@ -9,7 +9,7 @@
   * `cmake -DCMAKE_BUILD_TYPE=debug -DBUILD_STATIC_LIBS=ON -DBUILD_SHARED_LIBS=OFF -DARCHIVE_INSTALL_DIR=. -G "Unix Makefiles" ../..`
   * `make`
 * Buildroot
-  * choose the jsoncpp part
+  * choose the jsoncpp part path in [Makefile.buildroot](src/Makefile.buildroot), just need to modify the path of output lib
   * recompile
 
 ## Data Format
