@@ -88,7 +88,7 @@
                         <hr/>
                         <?php
                             // Parse with sections
-                            $ini_array = parse_ini_file("config.ini", true);
+                            $ini_array = parse_ini_file("/etc/aplex/config.ini", true);
                             /*
                             print_r($ini_array["remote"]["ip"]."\n");
                             while(current($ini_array)) {

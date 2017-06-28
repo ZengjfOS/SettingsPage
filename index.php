@@ -432,89 +432,93 @@
                               <td>1</td>
                               <td>
                                 <select name="GPIOPort1Mode" id="GPIOPort1Mode">
-                          		  <option value="Input">Input</option>
-                                  <option value="Output" selected="selected">Output</option>
+                          		  <option value="in">Input</option>
+                                  <option value="out" selected="selected">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort1Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>2</td>
                               <td>
                                 <select name="GPIOPort2Mode" id="GPIOPort2Mode">
-                          		  <option value="Input">Input</option>
-                                  <option value="Output" selected="selected">Output</option>
+                          		  <option value="in">Input</option>
+                                  <option value="out" selected="selected">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort2Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>3</td>
                               <td>
                                 <select name="GPIOPort3Mode" id="GPIOPort3Mode">
-                          		  <option value="Input">Input</option>
-                                  <option value="Output" selected="selected">Output</option>
+                          		  <option value="in">Input</option>
+                                  <option value="out" selected="selected">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort3Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>4</td>
                               <td>
                                 <select name="GPIOPort4Mode" id="GPIOPort4Mode">
-                          		  <option value="Input">Input</option>
-                                  <option value="Output" selected="selected">Output</option>
+                          		  <option value="in">Input</option>
+                                  <option value="out" selected="selected">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort4Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>5</td>
                               <td>
                                 <select name="GPIOPort5Mode" id="GPIOPort5Mode">
-                          		  <option value="Input" selected="selected">Input</option>
-                                  <option value="Output">Output</option>
+                          		  <option value="in" selected="selected">Input</option>
+                                  <option value="out">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort5Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>6</td>
                               <td>
                                 <select name="GPIOPort6Mode" id="GPIOPort6Mode">
-                          		  <option value="Input" selected="selected">Input</option>
-                                  <option value="Output">Output</option>
+                          		  <option value="in" selected="selected">Input</option>
+                                  <option value="out">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort6Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>7</td>
                               <td>
                                 <select name="GPIOPort7Mode" id="GPIOPort7Mode">
-                          		  <option value="Input" selected="selected">Input</option>
-                                  <option value="Output">Output</option>
+                          		  <option value="in" selected="selected">Input</option>
+                                  <option value="out">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort7Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
                             </tr>
                             <tr align="center" valign="middle">
                               <td>8</td>
                               <td>
                                 <select name="GPIOPort8Mode" id="GPIOPort8Mode">
-                          		  <option value="Input" selected="selected">Input</option>
-                                  <option value="Output">Output</option>
+                          		  <option value="in" selected="selected">Input</option>
+                                  <option value="out">Output</option>
                                 </select>
                               </td>
-                              <td>0</td>
+                              <td><input type="text" name="GPIOPort8Value" value="1" size="4"></td>
                               <td style="background-color:red"></td>
+                            </tr>
+                            <tr align="center" valign="middle">
+                              <td colspan="2"> <input type="button" name="OpenGPIOPort" id="OpenGPIOPort" value="Open" onclick="javascript:GPIOOpen()" /></td>
+                              <td colspan="2"><input type="button" name="CloseGPIOPort" id="CloseGPIOPort" value="Close" onclick="javascript:GPIOClose()"/></td>
                             </tr>
                           </table>
                         </div>

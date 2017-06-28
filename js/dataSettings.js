@@ -339,8 +339,9 @@ function updateRootfs(){
     });
 }
 
+var ip_addr = document.location.hostname;
 window.WebSocket = window.WebSocket || window.MozWebSocket;
-var websocket = new WebSocket('ws://127.0.0.1:9000',
+var websocket = new WebSocket('ws://' + ip_addr +':9000',
                               'dumb-increment-protocol');
 function UARTOpen(){
 
@@ -386,6 +387,48 @@ function UARTClose(){
     websocket.send(JSON.stringify(webSocketData));
 }
 
+function GPIOOpen(){
+    GPIOPort1Mode = $("#GPIOPort1Mode option:selected").val(); 
+    GPIOPort2Mode = $("#GPIOPort2Mode option:selected").val(); 
+    GPIOPort3Mode = $("#GPIOPort3Mode option:selected").val(); 
+    GPIOPort4Mode = $("#GPIOPort4Mode option:selected").val(); 
+    GPIOPort5Mode = $("#GPIOPort5Mode option:selected").val(); 
+    GPIOPort6Mode = $("#GPIOPort6Mode option:selected").val(); 
+    GPIOPort7Mode = $("#GPIOPort7Mode option:selected").val(); 
+    GPIOPort8Mode = $("#GPIOPort8Mode option:selected").val(); 
+
+
+    webSocketData = 
+    {
+        "categories":"gpio", 
+        "type":"client", 
+        "command":"open",
+        "1":GPIOPort1Mode, 
+        "2":GPIOPort1Mode, 
+        "3":GPIOPort1Mode, 
+        "4":GPIOPort1Mode, 
+        "5":GPIOPort1Mode, 
+        "6":GPIOPort1Mode, 
+        "7":GPIOPort1Mode, 
+        "8":GPIOPort1Mode
+    }
+
+    // console.info(webSocketData);
+    websocket.send(JSON.stringify(webSocketData));
+}
+
+function GPIOClose(){
+    webSocketData = 
+    {
+        "categories":"gpio", 
+        "type":"client", 
+        "command":"close",
+    }
+    
+    // console.info(webSocketData);
+    websocket.send(JSON.stringify(webSocketData));
+}
+
 $(function(){  
     var value = $('input[type="radio"][name="IPSettings"]:checked').val();
 
@@ -417,6 +460,9 @@ $(function(){
             $('#UARTReceiveData').val($('#UARTReceiveData').val() + "send: " + root["send_index"] + ", recv: " + root["recv_index"] + ", cmp: " + root["cmp_index"] + ", data: " + root["data"]);
             if($('#UARTReceiveData').length)
                 $('#UARTReceiveData').scrollTop($('#UARTReceiveData')[0].scrollHeight - $('#UARTReceiveData').height());
+        }
+
+        if (root["categories"] == "gpio" && root["type"] == "server") {
         }
     };
 
