@@ -80,3 +80,7 @@ Linux 4.4
   * MIO 8 GPIO测试；
   * MIO USB U盘检测；
   * CN1 I2C检测；
+
+## 五、软件访问流程图
+
+![software_workflow.jpg](software_workflow.jpg)
