@@ -12,7 +12,7 @@ Linux 4.4
 
 * 使用[Buildroot](https://buildroot.org/)进行操作系统制作，目前暂定使用[buildroot-2017.05.tar.gz](https://buildroot.org/downloads/)版本：
 * 编译说明：
-  * 指定编译器下载：[Linaro Releases](https://releases.linaro.org/components/toolchain/binaries/)
+  * 指定编译器下载：[Linaro Releases](https://releases.linaro.org/components/toolchain/binaries/5.3-2016.05/)
   * 使用sysvinit进行系统init启动；
   * 系统软件需求：
     * root账户名：root；
