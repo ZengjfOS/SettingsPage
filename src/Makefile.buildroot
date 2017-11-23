@@ -3,7 +3,8 @@ gccPath=output/host/usr/bin/arm-none-linux-gnueabi-g++
 
 SRC = ARM_WebSocket.cpp \
 	  main.cpp \
-	  uart/uart.cpp
+	  uart/uart.cpp \
+	  gpio/gpio.cpp
 
 all:
 	${buildrootHome}/${gccPath} \
@@ -15,9 +16,9 @@ all:
 		-lwebsockets \
 		-ljsoncpp \
 		$(SRC) \
-		-o lwsserver
+		-o lwsserver \
+		-std=c++11
 
 .PHONY: clean
 clean:
 	rm lwsserver
-
